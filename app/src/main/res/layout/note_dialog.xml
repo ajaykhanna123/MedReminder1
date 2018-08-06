@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin"
+    android:paddingTop="@dimen/activity_margin">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:fontFamily="sans-serif-medium"
+        android:lineSpacingExtra="8sp"
+        android:text="@string/lbl_new_note_title"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/lbl_new_note_title"
+        android:textStyle="normal" />
+
+    <EditText
+        android:id="@+id/note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="21dp"
+        android:layout_marginTop="67dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Medicine"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="21dp" />
+
+    <EditText
+        android:id="@+id/totime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/note"
+        android:layout_marginTop="154dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Time"
+        android:layout_alignLeft="@+id/note" />
+
+    <Button
+        android:id="@+id/btn_t"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="calltime"
+        android:layout_alignEnd="@+id/dialog_title"
+        android:layout_alignTop="@+id/totime"
+        android:text="Set Time"
+        android:layout_alignRight="@+id/dialog_title" />
+
+    <TextView
+        android:id="@+id/Plain"
+        android:layout_width="78dp"
+        android:layout_height="48dp"
+        android:layout_alignBottom="@+id/note"
+        android:gravity="center"
+        android:layout_alignStart="@+id/btn_time"
+        android:text="Medicine"
+        android:layout_alignLeft="@+id/btn_time"
+        tools:ignore="UnknownId" />
+
+</RelativeLayout>
