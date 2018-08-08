@@ -30,13 +30,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
         public TextView note;
         public TextView dot;
         public TextView timestamp;
+        public TextView date;
         public TextView time;
 
         public MyViewHolder(View view) {
             super(view);
             note = view.findViewById(R.id.note);
             dot = view.findViewById(R.id.dot);
-            time=view.findViewById(R.id.time);
+            date=view.findViewById(R.id.toDate);
+            time=view.findViewById(R.id.totime);
             timestamp = view.findViewById(R.id.timestamp);
         }
     }

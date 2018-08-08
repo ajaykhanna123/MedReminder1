@@ -11,11 +11,13 @@ public class Note {
     public static final String COLUMN_NOTE = "note";
     public static final String COLUMN_TIMESTAMP = "timestamp";
     public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_DATE = "date";
 
     private int id;
     private String note;
     private String timestamp;
     private String time;
+    private String date;
 
 
     // Create table SQL query
@@ -23,16 +25,17 @@ public class Note {
             "CREATE TABLE " + TABLE_NAME + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_NOTE + " TEXT,"
-                    + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"+ COLUMN_TIME+"TIME,"
+                    + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"+ COLUMN_DATE + "DATE" +COLUMN_TIME+"TIME"
                     + ")";
 
     public Note() {
     }
 
-    public Note(int id, String note, String timestamp,String time) {
+    public Note(int id, String note, String timestamp,String date,String time) {
         this.id = id;
         this.note = note;
         this.timestamp = timestamp;
+        this.date=date;
         this.time=time;
     }
 
@@ -48,6 +51,10 @@ public class Note {
         return time;
     }
 
+    public String getDate() {
+        return date;
+    }
+
     public void setNote(String note) {
         this.note = note;
     }
@@ -58,6 +65,10 @@ public class Note {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public void setDate(String date) {
+        this.time = date;
     }
 
     public void setId(int id) {

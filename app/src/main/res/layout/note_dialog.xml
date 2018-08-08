@@ -25,31 +25,30 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="21dp"
-        android:layout_marginTop="67dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:inputType="text"
         android:text="Medicine"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="21dp" />
+        android:textColor="@color/note_list_text" />
 
     <EditText
         android:id="@+id/totime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/note"
-        android:layout_marginTop="154dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/toDate"
+        android:layout_marginBottom="201dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Time"
-        android:layout_alignLeft="@+id/note" />
+        android:textColor="@color/note_list_text" />
 
     <Button
         android:id="@+id/btn_t"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="calltime"
+
         android:layout_alignEnd="@+id/dialog_title"
         android:layout_alignTop="@+id/totime"
         android:text="Set Time"
@@ -65,5 +64,27 @@
         android:text="Medicine"
         android:layout_alignLeft="@+id/btn_time"
         tools:ignore="UnknownId" />
+
+    <Button
+        android:id="@+id/btn_d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/dialog_title"
+        android:layout_alignTop="@+id/toDate"
+        android:text="Set Date"
+        android:layout_alignLeft="@+id/dialog_title" />
+
+    <EditText
+        android:id="@+id/toDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="29dp"
+        android:layout_marginTop="151dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Date"
+        android:textColor="@color/note_list_text" />
 
 </RelativeLayout>

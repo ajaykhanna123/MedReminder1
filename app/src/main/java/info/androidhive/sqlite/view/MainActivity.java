@@ -1,5 +1,6 @@
 package info.androidhive.sqlite.view;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -40,8 +42,8 @@ public class MainActivity extends AppCompatActivity{
 
     private DatabaseHelper db;
 
-    final EditText txtTime=(EditText)findViewById(R.id.totime);
-    final Button btnTimePicker=(Button)findViewById(R.id.btn_t);
+//    final EditText txtTime=(EditText)findViewById(R.id.totime);
+//    final Button btnTimePicker=(Button)findViewById(R.id.btn_t);
 
 
 
@@ -83,35 +85,6 @@ public class MainActivity extends AppCompatActivity{
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-//        txtTime.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View view) {
-//                if(view == btnTimePicker){
-//                final Calendar c = Calendar.getInstance();
-//                int mHour = c.get(Calendar.HOUR_OF_DAY);
-//                int mMinute = c.get(Calendar.MINUTE);
-//
-//                // Launch Time Picker Dialog
-//                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this,
-//                        new TimePickerDialog.OnTimeSetListener() {
-//
-//                            @Override
-//                            public void onTimeSet(TimePicker view, int hourOfDay,
-//                                                  int minute) {
-//
-//                                txtTime.setText(hourOfDay + ":" + minute);
-//                            }
-//                        }, mHour, mMinute, false);
-//                timePickerDialog.show();
-//            }}
-//        });
-
-
-
-
-
         /**
          * On long press on RecyclerView item, open alert dialog
          * with options to choose
@@ -134,12 +107,12 @@ public class MainActivity extends AppCompatActivity{
      * Inserting new note in db
      * and refreshing the list
      */
-    private void createNote(String note,String time) {
+    private void createNote(String note,String date,String time) {
 
 
         // inserting note in db and getting
         // newly inserted note id
-        long id = db.insertNote(note,time);
+        long id = db.insertNote(note,date,time);
 
         // get the newly inserted note from db
         Note n = db.getNote(id);
@@ -159,11 +132,12 @@ public class MainActivity extends AppCompatActivity{
      * Updating note in db and updating
      * item in the list by its position
      */
-    private void updateNote(String note,String time, int position) {
+    private void updateNote(String note,String date,String time, int position) {
         Note n = notesList.get(position);
         // updating note text
         n.setNote(note);
-        n.setTime(note);
+        n.setDate(date);
+        n.setTime(time);
         // updating note in db
         db.updateNote(n);
 
@@ -220,6 +194,13 @@ public class MainActivity extends AppCompatActivity{
      * button text to UPDATE
      */
     private void showNoteDialog(final boolean shouldUpdate, final Note note, final int position) {
+
+
+
+
+
+
+
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getApplicationContext());
         View view = layoutInflaterAndroid.inflate(R.layout.note_dialog, null);
 
@@ -230,6 +211,57 @@ public class MainActivity extends AppCompatActivity{
         final EditText Time=view.findViewById(R.id.time);
         TextView dialogTitle = view.findViewById(R.id.dialog_title);
         dialogTitle.setText(!shouldUpdate ? getString(R.string.lbl_new_note_title) : getString(R.string.lbl_edit_note_title));
+
+        final Button btnDatePicker=view.findViewById(R.id.btn_d);
+        final EditText txtDate=view.findViewById(R.id.toDate);
+        btnDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
+
+
+        final Button btnTimePicker=view.findViewById(R.id.btn_t);
+        final EditText txtTime=view.findViewById(R.id.totime);
+        btnTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mHour = c.get(Calendar.HOUR_OF_DAY);
+                int mMinute = c.get(Calendar.MINUTE);
+                // Launch Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+
+                                txtTime.setText(hourOfDay + ":" + minute);
+
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
+            }
+        });
 
 
         if (shouldUpdate && note != null) {
@@ -268,15 +300,34 @@ public class MainActivity extends AppCompatActivity{
                 // check if user updating note
                 if (shouldUpdate && note != null) {
                     // update note by it's id
-                    updateNote(inputNote.getText().toString(),inputNote.getText().toString(), position);
+                    updateNote(inputNote.getText().toString(),inputNote.getText().toString(),inputNote.getText().toString(), position);
                 } else {
                     // create new note
-                    createNote(inputNote.getText().toString(),inputNote.getText().toString());
+                    createNote(inputNote.getText().toString(),inputNote.getText().toString(),inputNote.getText().toString());
                 }
             }
         });
-    }
 
+
+    }
+//    public void calltime(){
+//        Calendar c = Calendar.getInstance();
+//        int mHour = c.get(Calendar.HOUR_OF_DAY);
+//        int mMinute = c.get(Calendar.MINUTE);
+//
+//        // Launch Time Picker Dialog
+//        TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this,
+//                new TimePickerDialog.OnTimeSetListener() {
+//
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay,
+//                                          int minute) {
+//
+//                        txtTime.setText(hourOfDay + ":" + minute);
+//                    }
+//                }, mHour, mMinute, false);
+//        timePickerDialog.show();
+//    }
     /**
      * Toggling list and empty notes view
      */
@@ -290,24 +341,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public void calltime(){
-                Calendar c = Calendar.getInstance();
-                int mHour = c.get(Calendar.HOUR_OF_DAY);
-                int mMinute = c.get(Calendar.MINUTE);
 
-                // Launch Time Picker Dialog
-                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this,
-                        new TimePickerDialog.OnTimeSetListener() {
-
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay,
-                                                  int minute) {
-
-                                txtTime.setText(hourOfDay + ":" + minute);
-                            }
-                        }, mHour, mMinute, false);
-                timePickerDialog.show();
-            }
 }
 
 
