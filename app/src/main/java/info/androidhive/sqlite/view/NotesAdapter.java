@@ -37,8 +37,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
             super(view);
             note = view.findViewById(R.id.note);
             dot = view.findViewById(R.id.dot);
-            date=view.findViewById(R.id.toDate);
-            time=view.findViewById(R.id.totime);
+            date=view.findViewById(R.id.dte);
+            time=view.findViewById(R.id.tme);
             timestamp = view.findViewById(R.id.timestamp);
         }
     }
@@ -68,6 +68,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
 
         // Formatting and displaying timestamp
         holder.timestamp.setText(formatDate(note.getTimestamp()));
+
+        holder.date.setText(note.getDate());
+
+        holder.time.setText(note.getTime());
     }
 
     @Override

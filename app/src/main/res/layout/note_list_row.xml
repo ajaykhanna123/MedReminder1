@@ -32,9 +32,25 @@
         android:id="@+id/note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timestamp"
-        android:layout_toRightOf="@id/dot"
+        android:layout_below="@+id/dot"
+        android:layout_centerHorizontal="true"
         android:textColor="@color/note_list_text"
         android:textSize="@dimen/note_list_text" />
+
+    <TextView
+        android:id="@+id/dte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp" />
+
+    <TextView
+        android:id="@+id/tme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="135dp" />
 
 </RelativeLayout>

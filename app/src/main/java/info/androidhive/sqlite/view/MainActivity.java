@@ -195,12 +195,6 @@ public class MainActivity extends AppCompatActivity{
      */
     private void showNoteDialog(final boolean shouldUpdate, final Note note, final int position) {
 
-
-
-
-
-
-
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getApplicationContext());
         View view = layoutInflaterAndroid.inflate(R.layout.note_dialog, null);
 
@@ -208,7 +202,8 @@ public class MainActivity extends AppCompatActivity{
         alertDialogBuilderUserInput.setView(view);
 
         final EditText inputNote = view.findViewById(R.id.note);
-        final EditText Time=view.findViewById(R.id.time);
+//         EditText Date =view.findViewById(R.id.toDate);
+//         EditText Time=view.findViewById(R.id.totime);
         TextView dialogTitle = view.findViewById(R.id.dialog_title);
         dialogTitle.setText(!shouldUpdate ? getString(R.string.lbl_new_note_title) : getString(R.string.lbl_edit_note_title));
 
@@ -266,6 +261,8 @@ public class MainActivity extends AppCompatActivity{
 
         if (shouldUpdate && note != null) {
             inputNote.setText(note.getNote());
+            txtDate.setText(note.getDate());
+            txtTime.setText(note.getTime());
         }
         alertDialogBuilderUserInput
                 .setCancelable(false)
@@ -300,10 +297,10 @@ public class MainActivity extends AppCompatActivity{
                 // check if user updating note
                 if (shouldUpdate && note != null) {
                     // update note by it's id
-                    updateNote(inputNote.getText().toString(),inputNote.getText().toString(),inputNote.getText().toString(), position);
+                    updateNote(inputNote.getText().toString(),txtDate.getText().toString(),txtTime.getText().toString(), position);
                 } else {
                     // create new note
-                    createNote(inputNote.getText().toString(),inputNote.getText().toString(),inputNote.getText().toString());
+                    createNote(inputNote.getText().toString(),txtDate.getText().toString(),txtTime.getText().toString());
                 }
             }
         });
