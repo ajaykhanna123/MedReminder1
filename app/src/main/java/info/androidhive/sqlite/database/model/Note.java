@@ -25,7 +25,9 @@ public class Note {
             "CREATE TABLE " + TABLE_NAME + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_NOTE + " TEXT,"
-                    + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"+ COLUMN_DATE + "DATE" +COLUMN_TIME+"TIME"
+                    + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"+
+                    COLUMN_DATE + " DATE,"
+                    +COLUMN_TIME+" TIME,"
                     + ")";
 
     public Note() {
@@ -68,7 +70,7 @@ public class Note {
     }
 
     public void setDate(String date) {
-        this.time = date;
+        this.date= date;
     }
 
     public void setId(int id) {
