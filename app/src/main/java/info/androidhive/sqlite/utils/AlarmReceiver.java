@@ -7,9 +7,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.webkit.URLUtil;
 
 import info.androidhive.sqlite.database.DatabaseHelper;
 import info.androidhive.sqlite.view.MainActivity;
@@ -24,6 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public static String NOTIFICATION = "notification";
     DatabaseHelper dbHelp;
     int found=0;
+    private Context mContext;
 
 
     @Override
@@ -53,8 +59,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             MediaPlayer mediaPlayer=MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
             mediaPlayer.start();
             Notification.Builder builder = new Notification.Builder(context);
-            builder.setContentText(intent.getStringExtra("task")).setContentTitle("Task").setOngoing(true);
-            builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+            builder.setContentText(intent.getStringExtra("task")).setContentTitle("Medicine Reminder")
+                    .setContentText("Its time for your medicine").setOngoing(true);
+            builder.setSmallIcon(R.drawable.md);
 
             int notifyId = intent.getIntExtra("millis", 0);
             Intent intent2 = new Intent(context, MainActivity.class);
@@ -74,7 +81,14 @@ public class AlarmReceiver extends BroadcastReceiver {
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             //manager.notify(sPref.getInt("size",-1), notification);
             manager.notify((int) System.currentTimeMillis(), notification);
+            //int random= (int) Math.random();
+
         }
+
+    }
+    public static void showNotification(Context c, Intent intent,
+                                        int notificationId, String title, String message, int largeIcon,
+                                        int smallIcon) {
 
     }
 }
