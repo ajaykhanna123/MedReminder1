@@ -1,9 +1,14 @@
 package info.androidhive.sqlite.view;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -25,11 +31,13 @@ import android.widget.Toast;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import info.androidhive.sqlite.R;
 import info.androidhive.sqlite.database.DatabaseHelper;
 import info.androidhive.sqlite.database.model.Note;
+import info.androidhive.sqlite.utils.AlarmReceiver;
 import info.androidhive.sqlite.utils.MyDividerItemDecoration;
 import info.androidhive.sqlite.utils.RecyclerTouchListener;
 
@@ -337,6 +345,29 @@ public class MainActivity extends AppCompatActivity{
             noNotesView.setVisibility(View.VISIBLE);
         }
     }
+    //----------------------alarm code------------------
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void setAlarm(long timeInMillis, String task)
+    {
+        Log.d("notif_task", "setAlarm: "+timeInMillis);
+        AlarmManager manager= (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent=new Intent(MainActivity.this, AlarmReceiver.class);
+        intent.putExtra("task",task);
+        intent.putExtra("millis",(int) timeInMillis);
+        final int _id = (int) System.currentTimeMillis();
+//        Log.d("", "setAlarm: ");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int)timeInMillis, intent, PendingIntent.FLAG_ONE_SHOT);
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent);
+        //manager.set(AlarmManager.RTC, timeInMillis, pendingIntent);
+        Date date = new Date(timeInMillis);
+        Log.d("Date:", date.toString());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+        } else {
+            manager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+        }
+    }
+
 
 
 }
