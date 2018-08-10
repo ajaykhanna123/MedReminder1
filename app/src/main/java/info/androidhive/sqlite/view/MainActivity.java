@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -49,6 +50,14 @@ public class MainActivity extends AppCompatActivity{
     private TextView noNotesView;
 
     private DatabaseHelper db;
+    final Calendar[] ccc = {Calendar.getInstance()};
+    AlarmManager alarmManager;
+    String taskName="";
+    private static MainActivity inst;
+
+    public static MainActivity instance() {
+        return inst;
+    }
 
 //    final EditText txtTime=(EditText)findViewById(R.id.totime);
 //    final Button btnTimePicker=(Button)findViewById(R.id.btn_t);
@@ -69,6 +78,7 @@ public class MainActivity extends AppCompatActivity{
         db = new DatabaseHelper(this);
 
         notesList.addAll(db.getAllNotes());
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -257,6 +267,8 @@ public class MainActivity extends AppCompatActivity{
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
+                                ccc[0].set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                ccc[0].set(Calendar.MINUTE, minute);
 
                                 txtTime.setText(hourOfDay + ":" + minute);
 
@@ -309,6 +321,17 @@ public class MainActivity extends AppCompatActivity{
                 } else {
                     // create new note
                     createNote(inputNote.getText().toString(),txtDate.getText().toString(),txtTime.getText().toString());
+                    if(inputNote.getText().toString().length()>0 && ccc[0]!=null) {
+                        taskName = inputNote.getText().toString();
+                        Log.d("calendar_time", "onClick: " + ccc[0].getTimeInMillis());
+                        setAlarm(ccc[0].getTimeInMillis(), inputNote.getText().toString());
+                        //scheduleNotification(MainActivity.this,ccc.getTimeInMillis(), (int) System.currentTimeMillis());
+
+                        Toast.makeText(MainActivity.this, "Task Added..", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "All details required.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -346,7 +369,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
     //----------------------alarm code------------------
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
     public void setAlarm(long timeInMillis, String task)
     {
         Log.d("notif_task", "setAlarm: "+timeInMillis);

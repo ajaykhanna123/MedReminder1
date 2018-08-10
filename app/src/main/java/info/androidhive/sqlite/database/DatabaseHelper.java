@@ -101,6 +101,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return note;
     }
 
+    public Cursor fetchData()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String str = ("SELECT id, * FROM notes");
+        return db.rawQuery(str,null);
+
+    }
+
     public List<Note> getAllNotes() {
         List<Note> notes = new ArrayList<>();
 
