@@ -12,9 +12,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.v4.app.NotificationCompat;
+//import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.webkit.URLUtil;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import info.androidhive.sqlite.database.DatabaseHelper;
 import info.androidhive.sqlite.view.MainActivity;
@@ -56,11 +58,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         Log.d("notif_task", "onReceive: " + intent.getStringExtra("task"));
 
         if(found==1) {
-            MediaPlayer mediaPlayer=MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
+
+            MediaPlayer mediaPlayer=MediaPlayer.create(context, Settings.System.DEFAULT_ALARM_ALERT_URI);
             mediaPlayer.start();
             Notification.Builder builder = new Notification.Builder(context);
             builder.setContentText(intent.getStringExtra("task")).setContentTitle("Medicine Reminder")
-                    .setContentText("Its time for your medicine").setOngoing(true);
+                    .setContentText("Its time for your Medicine ").setOngoing(true);
             builder.setSmallIcon(R.drawable.md);
 
             int notifyId = intent.getIntExtra("millis", 0);

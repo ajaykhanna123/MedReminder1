@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.androidhive.sqlite">
-    <uses-permission android:name="android.permission.SET_ALARM"/>
+
+    <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="Medicine Reminder"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/ic"
+        android:label="Med Time"
+        android:roundIcon="@drawable/ic"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--suppress AndroidDomInspection -->
         <activity
             android:name=".view.MainActivity"
-            android:label="@string/app_name"
+            android:label="Med Time"
             android:theme="@style/AppTheme.NoActionBar">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <receiver android:name=".utils.AlarmReceiver"></receiver>
+
+        <!--suppress AndroidDomInspection -->
+        <activity android:name=".view.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".utils.AlarmReceiver">
-        </receiver>
     </application>
 
 </manifest>
